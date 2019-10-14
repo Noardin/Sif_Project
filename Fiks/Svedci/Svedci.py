@@ -1,5 +1,5 @@
 import math
-
+from .zadani import Zadani
 def rozrad(vztahy):
     max_vztahu = 0
     dodavka1 = []
@@ -48,33 +48,43 @@ def rozrad(vztahy):
 f = open("input.txt")
 w = open("output.txt", "w")
 pocet_zadani = f.readline()
-for zadani in range(0, int(pocet_zadani)):
+zadani = []
+#udelej pro pocet zadani
+for z in range(0, int(pocet_zadani)):
     vysledny_string = ""
     svedci = f.readline()
     pocet_svedku, pocet_dvojic_lidi_coseznaji = svedci.split()
     CheckList = {}
     VztahyList = {}
+#   vytvor polozku pro kazdeho svedka
     for svedek in range(1, int(pocet_svedku)+1):
         CheckList[str(svedek)] = False
         VztahyList[str(svedek)] = []
-
+# precti dvojice a prirad je
     for dvojice_x in range(0, int(pocet_dvojic_lidi_coseznaji)):
         dvojice = f.readline()
         A, B = dvojice.split()
 
         VztahyList[str(A)].append(int(B))
         VztahyList[str(B)].append(int(A))
-    rozrazeno = rozrad(VztahyList)
 
-    if type(rozrazeno) is not dict:
-        vysledny_string = "No solution"
-    else:
-        for svedek in range(1, int(pocet_svedku) + 1):
-            if int(svedek) in rozrazeno["dodavka1"]:
-                vysledny_string += "1 "
-            else:
-                vysledny_string += "2 "
-    w.write(vysledny_string+"\n")
+    zadani.append(Zadani(pocet_svedku, VztahyList))
+    # rozrazeno = rozrad(VztahyList)
+
+    # if type(rozrazeno) is not dict:
+    #     vysledny_string = "No solution"
+    # else:
+    #     for svedek in range(1, int(pocet_svedku) + 1):
+    #         if int(svedek) in rozrazeno["dodavka1"]:
+    #             vysledny_string += "1"
+    #
+    #         else:
+    #             vysledny_string += "2"
+    #
+    #         if int(svedek) != int(pocet_svedku)+1:
+    #             vysledny_string += " "
+    # if int(z) != int(pocet_zadani):
+    #     w.write(vysledny_string+"\n")
 
     f.readline()
 w.close()
